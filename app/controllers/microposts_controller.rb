@@ -20,12 +20,17 @@ class MicropostsController < ApplicationController
 	end
 
 	def index
-
+		@microposts = Micropost.paginate(page: params[:page], per_page: 7)
 	end
+
 	def show
-		render 'microposts/_comments'
+		@micropost = Micropost.find(params[:id])
+		@comments=@micropost.comments
+		@comments = @micropost.comments.paginate(page: params[:page])
+		
 		
 	end
+	
 	private
 
 		def micropost_params

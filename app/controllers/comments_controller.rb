@@ -1,9 +1,12 @@
 class CommentsController < ApplicationController
 	def new	
-		@comment=Comment.all
 	end
 
 	def create
+		@comment = Comment.new(comment_params)
+		if @comment.save
+			redirect_to :back
+		end
 	end
 
 
@@ -12,4 +15,10 @@ class CommentsController < ApplicationController
 
 	def show
 	end
+
+	private
+
+		def comment_params
+			params.require(:comment).permit(:content,:user_id,:micropost_id)
+		end
 end

@@ -1,0 +1,18 @@
+<% @comments.each do |c| %>
+
+<%= gravatar_for c.user,size:40  %><br>
+<%= c.user.name %>:
+<%= c.content %><br>
+<i>Post at:</i>
+<%= time_ago_in_words(c.created_at) %> ago.
+<hr>
+<% end %>
+<% if logged_in? %>
+
+<%= form_for(Comment.new) do |f| %>
+  <%= f.text_field :content, class: 'form-control' %>
+  <%= f.hidden_field :user_id,:value=>current_user.id %>
+  <%= f.hidden_field :micropost_id,:value=>@micropost.id %>
+  <%= f.submit "Post Comment", class: "btn btn-primary" %>
+<% end %>
+<% end %>
